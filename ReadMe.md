@@ -34,7 +34,7 @@ Below is a simplified block diagram of the mem-tester architecture.
 ## mem_read_write module:
 
   mem_read_write is an integration of mem_read and mem_write modules into one module to do both read and write functions together.
-  All of above modules are using the wrapper modules axi_read_maser and axi_write_master, which was provided by Xilix Vitis, will communicate with DDR of the FPGA card. Following Figure demostrate the block diagram of mem_read_write and the architecture for above.
+  All of above modules are using the wrapper modules axi_read_maser and axi_write_master, which was provided by Xilinx Vitis, will communicate with DDR of the FPGA card. Following Figure demonstrate the block diagram of mem_read_write and the architecture for above.
 
 <div style="text-align: center">
 <img align="center" src="./images/figure_4.png" width="574" height="410">
@@ -68,12 +68,12 @@ Below is a simplified block diagram of the mem-tester architecture.
 
 Since Hardware  Acceleration happened to be improving an already made software architecture, reverse engineering on the software design has to take place in case of figuring out the boundaries to indicate the host side of the acceleration and the hardware offloading side of the acceleration, in such task once the boundaries are defined converting the software instructions into hardware kernel is the first phase of the design.So we first make the behavioral model of what we are going to hardware offload in C++ in a OOP based structure where pointers would be used for both array starting addresses and enabling referencing the output variables like deceleration of outputs in SystemVerilog. The status are simply defined in a ‘enum’ block and switch statement would be use to define the role of the statement in the design. Once the C++ class of the behavioral model is done, the next phase is to run the behavioral tests on the model using it as a function, in here we would use the model in a for or while loop in the main function tracking the count of iterations with a print and one iteration would be considered as once clock cycle of the behavioral model test. once the behavioral model test passes the desired behavior of our design, we can start building the RTL kernel using our verified C++ behavioral model of our design, which would make it easier for us to manage the designing procedure much accurate and simpler in action.
 
-Once we make the RTL model the next process is to write the test bench in python to use COCOTB to run our RTL kernel using a desired simulator (in our case Icarus Verilog) and assert it with the behavioral model we made earlier with C++ by wrapping it with Cython, so the C++ class can be called in python fro assertion. This way, 75% of front end of the design is being done before we go for the Hardware Emulation for further testing. After ending the back and forth between the Behavioral Model and the RTL kernel Design once we are satisfied with the test results, the next phase is to plug our RTL in to the Hardware Emulation Environment provided by Vitis with the Environment conditional parameters we supplied to it. In Hardware Emulation, we have both the Host program side and the RTL kernel side to take care of, which would be explained below in detail.
+Once we make the RTL model the next process is to write the test bench in python to use COCOTB to run our RTL kernel using a desired simulator (in our case Icarus Verilog) and assert it with the behavioral model we made earlier with C++ by wrapping it with Cython, so the C++ class can be called in python from assertion. This way, 75% of front end of the design is being done before we go for the Hardware Emulation for further testing. After ending the back and forth between the Behavioral Model and the RTL kernel Design once we are satisfied with the test results, the next phase is to plug our RTL in to the Hardware Emulation Environment provided by Vitis with the Environment conditional parameters we supplied to it. In Hardware Emulation, we have both the Host program side and the RTL kernel side to take care of, which would be explained below in detail.
 
 Once the Hardware Emulation is tested successfully, we can move on to compile the code and make an AWS FPGA Image to run the design in actual Hardware and do further debugging to tailor it as a product. Below is the elaboration of Design Flow as introduced above.
 
 
-## Runnig the behavioral model tests
+## Running the behavioral model tests
 
 In here, the complete process of testing and compilation is being  handled by Makefile Automation using Bash Script. Therefore running a test is just a matter of calling the make command after changing directory in to the main folder of the related Behavioral Model as shown below.
 
@@ -151,7 +151,7 @@ scp -i <key file name>.pem ./*.* <username>@<ip address>:<path to workspace>/<pr
 **
 note that the location of the files and folders in your AWS development instance would depend on the workspace location you select
 **
-skip the introduction page  for later by  clicking next. In General Settings define the Kernel Name, Kernal Vender, Kernel Type(RTL), Has reset (1) and click next
+skip the introduction page  for later by  clicking next. In General Settings define the Kernel Name, Kernel Vender, Kernel Type(RTL), Has reset (1) and click next
 
 <div style="text-align: center">
 <img align="center" src="./images/figure_10.png" width="574" height="410">
